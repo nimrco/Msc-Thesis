@@ -14,7 +14,7 @@ host = strains_list_full_path[0].split("/")
 ftp = FTP(host[0])
 ftp.login()
 root = ftp.pwd()
-os.chdir('data')
+os.chdir('data/')
 
 for strain in strains_list_full_path:
     strain = strain.split("/", 1)[1]
