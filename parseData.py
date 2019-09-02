@@ -16,13 +16,13 @@ def merge_files(features_file, cds_file_zip, protein_file_zip):
         features_data = pd.read_csv(features, sep="\t")
 
     # genes
-    gene = features_data[[(features_data["# feature"] == 'gene') & (features_data["class"] == 'protein_coding')]]
-    cds = features_data[[(features_data["# feature"] == 'CDS') & (features_data["class"] == 'with_protein')]]
+    gene = features_data[((features_data["# feature"] == 'gene') & (features_data["class"] == 'protein_coding'))]
+    cds = features_data[((features_data["# feature"] == 'CDS') & (features_data["class"] == 'with_protein'))]
     gene_join = gene.merge(cds, on='locus_tag')
 
     # pseudogenes
-    pseudo_gene = features_data[[(features_data["# feature"] == 'gene') & (features_data["class"] == 'pseudogene')]]
-    pseudo_cds = features_data[[(features_data["# feature"] == 'CDS') & (features_data["class"] == 'without_protein')]]
+    pseudo_gene = features_data[((features_data["# feature"] == 'gene') & (features_data["class"] == 'pseudogene'))]
+    pseudo_cds = features_data[((features_data["# feature"] == 'CDS') & (features_data["class"] == 'without_protein'))]
     pseudo_join = pseudo_gene.merge(pseudo_cds, on='locus_tag')
 
     # proteins
