@@ -33,7 +33,7 @@ for strain in strains_list_full_path:
     ftp.retrbinary('RETR ' + feature_table, local_feature_table.write)
     ftp.retrbinary('RETR ' + protein, local_protein.write)
     ftp.retrbinary('RETR ' + cds, local_cds.write)
-    parseData.merge_files(feature_table, cds, protein)
+    parseData.merge_files(local_feature_table, local_cds, local_protein)
     local_feature_table.close()
     local_protein.close()
     local_cds.close()
