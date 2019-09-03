@@ -1,15 +1,14 @@
 import pandas as pd
 import gzip
 from Bio import SeqIO
+import shutil
 import re
 
 
 def extract_file(file):
-    uncompressed = open(file[:-3], "wb")
     with gzip.open(file, "rb") as compressed:
-        data = compressed.read()
-    uncompressed.write(data)
-    uncompressed.close()
+        with open(file[:-3], "wb") as uncompressed:
+            shutil.copyfileobj(compressed, uncompressed)
 
 
 def merge_files(features_file, cds_file_zip, protein_file_zip):
