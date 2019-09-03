@@ -2,6 +2,9 @@ from ftplib import FTP
 import os
 import parseData
 
+def download_file(file):
+
+
 strains_list_full_path = []
 strains_list = []
 with open("assembly_summary.txt") as parent_dir:
@@ -31,12 +34,12 @@ for strain in strains_list_full_path:
     local_protein = open(protein, 'wb')
     local_cds = open(cds, 'wb')
     ftp.retrbinary('RETR ' + feature_table, local_feature_table.write)
-    ftp.retrbinary('RETR ' + protein, local_protein.write)
-    ftp.retrbinary('RETR ' + cds, local_cds.write)
-    parseData.merge_files(feature_table, cds, protein)
     local_feature_table.close()
+    ftp.retrbinary('RETR ' + protein, local_protein.write)
     local_protein.close()
+    ftp.retrbinary('RETR ' + cds, local_cds.write)
     local_cds.close()
+    parseData.merge_files(feature_table, cds, protein)
     os.chdir('..')
     ftp.cwd(root)
 
