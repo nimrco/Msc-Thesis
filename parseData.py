@@ -14,7 +14,7 @@ def extract_file(file):
 
 def merge_files(features_file, cds_file_zip, protein_file_zip):
     print(features_file)
-    with gzip.open(features_file) as features:
+    with gzip.open(features_file, "rt") as features:
         features_data = pd.read_csv(features, sep="\t")
 
     # genes
