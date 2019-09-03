@@ -2,8 +2,6 @@ from ftplib import FTP
 import os
 import parseData
 
-def download_file(file):
-
 
 strains_list_full_path = []
 strains_list = []
