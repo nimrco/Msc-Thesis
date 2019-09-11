@@ -13,10 +13,10 @@ with open("assembly_summary.txt") as parent_dir:
             strains_list_full_path.append(strain[1][2:])
 
 host = strains_list_full_path[0].split("/")
-ftp = FTP(host[0])
 os.chdir('data')
 
 for strain in strains_list_full_path:
+    ftp = FTP(host[0])
     ftp.login()
     strain = strain.split("/", 1)[1]
     ftp.cwd(strain)
