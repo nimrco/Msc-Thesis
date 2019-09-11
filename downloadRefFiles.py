@@ -14,11 +14,10 @@ with open("assembly_summary.txt") as parent_dir:
 
 host = strains_list_full_path[0].split("/")
 ftp = FTP(host[0])
-ftp.login()
-root = ftp.pwd()
 os.chdir('data')
 
 for strain in strains_list_full_path:
+    ftp.login()
     strain = strain.split("/", 1)[1]
     ftp.cwd(strain)
     prefix = strain.split("/")[-1]
@@ -37,12 +36,12 @@ for strain in strains_list_full_path:
     local_protein.close()
     ftp.retrbinary('RETR ' + cds, local_cds.write)
     local_cds.close()
+    ftp.quit()
     parseData.merge_files(feature_table, cds, protein)
     os.chdir('..')
-    ftp.cwd(root)
 
 with open("strains_list", 'w') as strains_file:
     strains_file.write('\n'.join(strains_list))
 
-ftp.quit()
+
 
