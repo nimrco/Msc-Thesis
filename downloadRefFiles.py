@@ -31,17 +31,15 @@ for strain in strains_list_full_path:
     local_protein = open(protein, 'wb')
     local_cds = open(cds, 'wb')
     ftp.retrbinary('RETR ' + feature_table, local_feature_table.write)
-    local_feature_table.close()
     ftp.retrbinary('RETR ' + protein, local_protein.write)
-    local_protein.close()
     ftp.retrbinary('RETR ' + cds, local_cds.write)
-    local_cds.close()
     ftp.quit()
+    local_feature_table.close()
+    local_protein.close()
+    local_cds.close()
     parseData.merge_files(feature_table, cds, protein)
     os.chdir('..')
 
 with open("strains_list", 'w') as strains_file:
     strains_file.write('\n'.join(strains_list))
-
-
 
