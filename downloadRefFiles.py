@@ -16,9 +16,9 @@ strains_list = []
 ftp = FTP("ftp.ncbi.nlm.nih.gov")
 ftp.login()
 ftp.cwd("genomes/refseq/bacteria/Pseudomonas_aeruginosa")
-with open("assembly_summary.txt", 'w') as parent_dir:
-    ftp.retrbinary("RETR assembly_summary.txt", parent_dir.write)
-    ftp.quit()
+ftp.retrbinary("RETR assembly_summary.txt", open("assembly_summary.txt", 'wb').write)
+ftp.quit()
+with open("assembly_summary.txt") as parent_dir:
     for line in parent_dir:
         if not line.startswith("#"):
             line_tab = line.split('\t')
