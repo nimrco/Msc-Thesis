@@ -13,8 +13,9 @@ def download(file, strain_name):
 
 strains_list_full_path = []
 strains_list = []
-ftp = FTP("ftp.ncbi.nlm.nih.gov/genomes/refseq/bacteria/Pseudomonas_aeruginosa")
+ftp = FTP("ftp.ncbi.nlm.nih.gov")
 ftp.login()
+ftp.cwd("genomes/refseq/bacteria/Pseudomonas_aeruginosa")
 with open("assembly_summary.txt", 'w') as parent_dir:
     ftp.retrbinary("RETR assembly_summary.txt", parent_dir.write)
     ftp.quit()
