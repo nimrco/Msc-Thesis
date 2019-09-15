@@ -7,7 +7,7 @@ def download(file, strain_name):
     ftp = FTP(host[0])
     ftp.login()
     ftp.cwd(strain_name)
-    ftp.retrbinary('RETR ' + file, open(file, 'wb').write)
+    ftp.retrbinary("RETR " + file, open(file, 'wb').write)
     ftp.quit()
 
 
@@ -33,8 +33,8 @@ for strain in strains_list_full_path:
     protein = prefix + "_" + "protein.faa.gz"
     cds = prefix + "_" + "cds_from_genomic.fna.gz"
     download(feature_table, strain)
-    download(protein, strain)
     download(cds, strain)
+    download(protein, strain)
     parseData.merge_files(feature_table, cds, protein)
     os.chdir('..')
 
