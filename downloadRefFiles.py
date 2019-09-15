@@ -13,7 +13,11 @@ def download(file, strain_name):
 
 strains_list_full_path = []
 strains_list = []
-with open("assembly_summary.txt") as parent_dir:
+ftp = FTP("ftp.ncbi.nlm.nih.gov/genomes/refseq/bacteria/Pseudomonas_aeruginosa/")
+ftp.login()
+with open("assembly_summary.txt", 'w') as parent_dir:
+    ftp.retrbinary("RETR assembly_summary.txt", parent_dir.write)
+    ftp.quit()
     for line in parent_dir:
         if not line.startswith("#"):
             line_tab = line.split('\t')
