@@ -7,10 +7,8 @@ def download(file, strain_name):
     ftp = FTP(host[0])
     ftp.login()
     ftp.cwd(strain_name)
-    local_file = open(file, 'wb')
-    ftp.retrbinary('RETR ' + file, local_file.write)
+    ftp.retrbinary('RETR ' + file, open(file, 'wb').write)
     ftp.quit()
-    local_file.close()
 
 
 strains_list_full_path = []
