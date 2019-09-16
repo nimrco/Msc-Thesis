@@ -13,6 +13,7 @@ def download(file, strain_name):
 
 strains_list_full_path = []
 strains_list = []
+
 ftp = FTP("ftp.ncbi.nlm.nih.gov")
 ftp.login()
 ftp.cwd("genomes/refseq/bacteria/Pseudomonas_aeruginosa")
@@ -27,8 +28,17 @@ with open("assembly_summary.txt") as parent_dir:
 
 host = strains_list_full_path[0].split("/")
 os.chdir('data')
+flag = False
+index = 0
+while not flag:
+    for strain in strains_list_full_path:
+        strain = strain.split("/", 1)[1]
+        prefix = strain.split("/")[-1]
+        if prefix == "GCF_000480765.1_Pseu_aeru_BL19_V1":
+            index = strains_list_full_path.index(host + "/" + strain)
+            flag = True
 
-for strain in strains_list_full_path:
+for strain in strains_list_full_path[index:]:
     strain = strain.split("/", 1)[1]
     prefix = strain.split("/")[-1]
     strains_list.append(prefix)
