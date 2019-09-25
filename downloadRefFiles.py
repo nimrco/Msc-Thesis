@@ -34,7 +34,7 @@ while not flag:
     for strain in strains_list_full_path:
         strain = strain.split("/", 1)[1]
         prefix = strain.split("/")[-1]
-        if prefix == "GCF_003838875.1_ASM383887v1":
+        if prefix == "GCF_900144245.1_81":
             index = strains_list_full_path.index(host[0] + "/" + strain)
             flag = True
 
