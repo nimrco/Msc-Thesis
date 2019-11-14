@@ -7,6 +7,7 @@ root = "data/"
 strains = os.listdir(root)
 strains_df = pd.DataFrame(columns=["strain"])
 for index, strain in enumerate(strains):
+    print(strain)
     strains_df.loc[len(strains_df)] = [strain]
     genes = pd.read_csv(root + strain + "/genes.csv")
     for seq_index, row in genes.iterrows():
@@ -19,3 +20,4 @@ strains_df.to_csv("strains_list.csv")
 
 with open("protein_seq.fasta", "w") as file:
     file.write("\n".join(seq_list))
+print("done")
