@@ -21,3 +21,4 @@ for cluster, row in core_df.iterrows():
     with open(os.path.join("clusters", str(cluster)), "w") as cluster_file:
         cluster_file.write("\n".join(seq_list))
 
+    print("cluster: {} done".format(cluster))
