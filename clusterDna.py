@@ -22,3 +22,5 @@ for cluster, row in core_df.iterrows():
         cluster_file.write("\n".join(seq_list))
 
     print("cluster: {} done".format(cluster))
+
+print("script done")
