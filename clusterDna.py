@@ -23,6 +23,7 @@ for cluster, row in core_df.iterrows():
             header = strain + "|" + seq
             seq_list.append(">{}\n{}".format(header, dna))
 
+    print("test")
     os.mkdir(os.path.join("clusters", cluster))
     with open(os.path.join("clusters", cluster, str(cluster) + ".fasta"), "w") as cluster_file:
         cluster_file.write("\n".join(seq_list))
