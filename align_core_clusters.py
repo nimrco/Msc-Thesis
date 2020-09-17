@@ -15,7 +15,7 @@ def align(mode):
             with open(os.path.join(root, cluster, cluster + "_alignment"), "w") as aligned_file:
                 subprocess.run(mafft_args, stdout=aligned_file)
         else:
-            gblocks_args = ["Gblocks", str(os.path.join(root, cluster, cluster + "_alignment")), "-t=d", "-b5=a"]
+            gblocks_args = ["Gblocks_0.91b/Gblocks", str(os.path.join(root, cluster, cluster + "_alignment")), "-t=d", "-b5=a"]
             with open(os.path.join(root, cluster, cluster + "_alignment_gblocks"), "w") as gblocks_file:
                 subprocess.run(gblocks_args, stdout=gblocks_file)
         print("cluster: {} done".format(cluster))
