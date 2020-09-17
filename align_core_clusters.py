@@ -26,7 +26,7 @@ def align(mode):
 
 
 def main():
-    align(str(sys.argv[1]))
+    align(sys.argv[1])
 
 
 if __name__ == "__main__":
