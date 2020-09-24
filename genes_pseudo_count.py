@@ -14,3 +14,4 @@ for index, strain in enumerate(strains):
     pseudo_num = len(pseudo)
     strain_dict[index] = {"genes": genes_num, "pseudo": pseudo_num}
     print(genes)
+    print(pseudo)
