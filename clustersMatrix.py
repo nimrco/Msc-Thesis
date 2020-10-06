@@ -38,3 +38,4 @@ for strain in clusters_df_strains:
     clusters_df.loc["single_copy_core_clusters", strain] = single_copy_df[strain].count()
 
 clusters_df.to_csv("core_cluster_matrix.csv")
+print("script done")
