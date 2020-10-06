@@ -13,6 +13,7 @@ with open("cluster_output.clstr") as cluster_file:
             clusters_dict.update({cluster: []})
         else:
             strain = line.split(">")[1].split("|")[0]
+            strain = int(strain)
             clusters_dict[cluster].append(strain)
 
 clusters_dict_count = {cluster: Counter(strain) for cluster, strain in clusters_dict.items()}
