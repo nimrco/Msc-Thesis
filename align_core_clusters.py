@@ -24,12 +24,12 @@ def align(mode):
             with open(os.path.join(root, cluster, cluster + "_alignment_gblocks"), "w") as gblocks_file:
                 subprocess.run(gblocks_args, shell=True, stdout=gblocks_file)
         else:  # filter
-            lengths = [cluster]
+            lengths = [int(cluster)]
             alignment = AlignIO.read(open(os.path.join(root, cluster, cluster + "_alignment-gb")), "fasta")
             original_length = alignment.get_alignment_length()
             lengths.append(original_length)
             edited_alignment = None
-            for col_idx in range(alignment.get_alignment_length()):
+            for col_idx in range(original_length):
                 col = alignment[:, col_idx:col_idx + 1]
                 col_str = alignment[:, col_idx]
                 if not all(c == col_str[0] for c in col_str):
@@ -49,9 +49,9 @@ def align(mode):
                     seq = edited_alignment[strain_idx]
                     seq_strain_idx = int(seq.id.split("|")[0])
                     if strain_idx < seq_strain_idx:
-                        for i in range(seq_strain_idx - strain_idx):
-                            edited_alignment._records.insert(strain_idx + i, SeqRecord(Seq(edited_length * "-"),
-                                                                                       id="{} padding".format(strain_idx + i)))
+                        for padding_index in range(seq_strain_idx - strain_idx):
+                            edited_alignment._records.insert(strain_idx + padding_index, SeqRecord(Seq(edited_length * "-"),
+                                                                                       id="{} padding".format(strain_idx + padding_index)))
                         strain_idx += (seq_strain_idx - strain_idx + 1)
                         continue
                     strain_idx += 1
@@ -65,7 +65,7 @@ def align(mode):
         print("cluster num {} of {} done".format(i, clusters_num))
         i += 1
     if mode == "filter":
-        alignment_lengths_df.to_csv("stats_lengths.csv")
+        alignment_lengths_df.to_csv(os.path.join("tables", "stats_lengths.csv"))
     print("script done")
 
 
