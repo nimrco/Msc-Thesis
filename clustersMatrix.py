@@ -18,6 +18,7 @@ with open("cluster_output.clstr") as cluster_file:
 
 clusters_dict_count = {cluster: Counter(strain) for cluster, strain in clusters_dict.items()}
 clusters_df_strains = pd.DataFrame(clusters_dict_count).transpose()
+clusters_df_strains = clusters_df_strains.sort_index(axis=1)
 clusters_df = clusters_df_strains.copy(deep=True)
 clusters_df["zero_copy"] = clusters_df_strains.isnull().sum(axis=1)
 clusters_df = clusters_df.fillna(0)
