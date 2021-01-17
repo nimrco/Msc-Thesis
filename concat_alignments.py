@@ -1,21 +1,29 @@
 import os
 from Bio import AlignIO
+import config
 
 
-root = "clusters"
-alignments_num = len(os.listdir(root))
-i = 1
+def get_alignment_filtered_dict():
+    alignment_dict_local = {}
+    for cluster_local in os.listdir(config.clusters):
+        with open(os.path.join(config.clusters, cluster_local, cluster_local + "_alignment_filtered_without_gaps")) as alignment_file:
+            alignment_dict_local[cluster_local] = AlignIO.read(alignment_file, "fasta")
+    print("alignment_dict")
+    return alignment_dict_local
+
+
+alignment_dict = get_alignment_filtered_dict()
+alignments_num = len(os.listdir(config.clusters))
 concat_alignment = None
-for cluster in os.listdir(root):
+for i, cluster in enumerate(os.listdir(config.clusters)):
     print("alignment: {} start".format(cluster))
     print("alignmnet num {} of {} start".format(i, alignments_num))
-    alignment = AlignIO.read(open(os.path.join(root, cluster, cluster + "_alignment_filtered")), "fasta")
+    alignment = alignment_dict[cluster]
     if not concat_alignment:
         concat_alignment = alignment[:, :]
     else:
         concat_alignment += alignment[:, :]
     print("alignment num {} of {} done".format(i, alignments_num))
-    i += 1
-AlignIO.write(concat_alignment, open("concatenated_alignmnet", "w"), "fasta")
-
+with open(os.path.join(config.seq_files, "concatenated_alignmnet"), "w") as concatenated_file:
+    AlignIO.write(concat_alignment, concatenated_file, "fasta")
 print("script done")
