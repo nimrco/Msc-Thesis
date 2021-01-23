@@ -28,6 +28,6 @@ for i, cluster in enumerate(os.listdir(config.clusters)):
     else:
         concat_alignment += alignment[:, :]
     print("alignment num {} of {} done".format(i, alignments_num))
-with open(os.path.join(config.seq_files, "concatenated_alignmnet"), "w") as concatenated_file:
+with open(os.path.join(config.seq_files, "concatenated_alignmnet_id"), "w") as concatenated_file:
     AlignIO.write(concat_alignment, concatenated_file, "fasta")
 print("script done")
