@@ -2,10 +2,10 @@ import pandas as pd
 import os
 
 root = "data"
-core_df = pd.read_csv("core_cluster_matrix.csv")
+core_df = pd.read_csv(os.path.join("tables", "core_cluster_matrix.csv"))
 core_df = core_df[core_df["core_cluster"] == 1].iloc[:, 1:-4]
-strains_df = pd.read_csv("strains_list.csv")
-clusters_df = pd.read_csv("cluster.csv").iloc[:, 1:]
+strains_df = pd.read_csv(os.path.join("tables", "strains_list.csv"))
+clusters_df = pd.read_csv(os.path.join("tables", "cluster.csv")).iloc[:, 1:]
 seq_dict = {}
 
 for strain in os.listdir(root):

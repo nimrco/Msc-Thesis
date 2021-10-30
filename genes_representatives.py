@@ -1,7 +1,8 @@
 import os
 import pandas as pd
+import config
 
-strains_df = pd.read_csv(os.path.join("tables", "strains_list.csv"))
+strains_df = pd.read_csv(os.path.join(config.tables, "strains_list.csv"))
 seq_list = []
 seq_dict = {}
 
@@ -22,11 +23,12 @@ with open(os.path.join("seq_files", "cluster_output.clstr")) as cluster_file:
             strain_name = strains_df.iloc[strain_index]["strain"]
             seq = seq_dict[strain_name].iloc[seq_index]
 
-            # header: strain|seq|cluster|length
-            header = "|".join([str(strain_index),
-                               str(seq_index),
+            # header: Gene|cluster|length|strain|seq
+            header = "|".join(['Gene',
                                cluster,
-                               length])
+                               length,
+                               str(strain_index),
+                               str(seq_index)])
             seq_list.append(">{}\n{}".format(header, seq))
 
 with open(os.path.join("seq_files", "genes_repr.fasta"), "w") as genes_file:

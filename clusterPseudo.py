@@ -2,15 +2,15 @@ import os
 import sys
 import subprocess
 import pandas as pd
+import config
 
 
 def preprocess():
     seq_list = []
-    root = "data"
     strains_df = pd.read_csv("strains_list.csv")
     for strain_index, strain_row in strains_df.iterrows():
         strain = strain_row.values[1]
-        pseudo_genes = pd.read_csv(os.path.join(root, strain, "pseudo_genes.csv"))
+        pseudo_genes = pd.read_csv(os.path.join(config.data, strain, "pseudo_genes.csv"))
         if not pseudo_genes.empty:
             for seq_index, seq_row in pseudo_genes.iterrows():
                 header = str(strain_index) + "|" + str(seq_index)
