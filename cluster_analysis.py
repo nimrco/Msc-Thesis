@@ -56,15 +56,33 @@ def get_cluster_distribution():
 cluster_dict = get_cluster_distribution()
 cluster_df = pd.DataFrame.from_dict(cluster_dict, orient='index',
                                     columns=['cluster_size', 'cluster_type', 'gene_count', 'pseudo_count'])
+cluster_df.to_csv("cluster_distribution.csv", index=False)
 
-sns.set_theme(style="darkgrid")
-ax = sns.countplot(data=cluster_df, x="cluster_size", hue="cluster_type")
-y = np.arange(0, 35000, 2000)
+
+def change_type(type):
+    if type == 'gene':
+        return 'Gene-only'
+    elif type == 'pseudo':
+        return 'Pseudogene-only'
+    return 'Mixed'
+
+
+sns.set_theme(style="white")
+cluster_df = pd.read_csv("cluster_distribution.csv")
+cluster_df['cluster_type'] = cluster_df['cluster_type'].apply(change_type)
+d = sns.color_palette(n_colors=3)
+g = sns.countplot(data=cluster_df, x="cluster_size", hue="cluster_type", hue_order=['Mixed', 'Gene-only', 'Pseudogene-only'],
+              palette={'Mixed': d[0], 'Gene-only': d[2], 'Pseudogene-only': d[1]})
 plt.legend(loc='upper right')
-ax.set_yticks(y)
-ax.set_yscale("log")
-plt.title("distribution of genes/pseudogenes depending on cluster size")
-plt.savefig("genes_pseudo_cluster_size.png")
-plt.show()
+y = np.arange(0, 35000, 2000)
+plt.yticks(y)
+plt.yscale("log")
+plt.xticks(ha='right')
+plt.xlabel("Cluster size")
+plt.ylabel("Number of clusters")
+plt.yticks(fontweight='bold')
+plt.xticks(fontweight='bold')
+
+plt.savefig("genes_pseudo_cluster_size.png", dpi=300)
 
 
