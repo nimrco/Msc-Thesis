@@ -31,3 +31,7 @@ for i, cluster in enumerate(os.listdir(config.clusters)):
 with open(os.path.join(config.seq_files, "concatenated_alignmnet_id"), "w") as concatenated_file:
     AlignIO.write(concat_alignment, concatenated_file, "fasta")
 print("script done")
+
+# with open(os.path.join(config.seq_files, "concatenated_alignmnet_id")) as concatenated_file:
+#     alignment = AlignIO.read(concatenated_file, format="fasta")
+#     print(len(alignment) * alignment.get_alignment_length())
