@@ -4,7 +4,7 @@ import os
 import config
 
 
-def get_mlsts():
+def get_mlsts(groupby_flag=True):
     mlst_data = pd.read_excel(os.path.join(config.tables, "strain_summary.xlsx"))
     mlst_data = mlst_data[['Species', 'Strain', 'Refseq assembly accession', 'MLST Sequence Type']]
     mlst_data = mlst_data[mlst_data['Species'] == 'Pseudomonas aeruginosa']
@@ -12,9 +12,11 @@ def get_mlsts():
     mlst_data['MLST'] = mlst_data['MLST Sequence Type'].apply(lambda r: r.split('|')[-1])
     mlst_data = mlst_data[mlst_data['MLST'] != '-']
     mlst_data['Refseq'] = mlst_data['Refseq assembly accession'].apply(lambda r: r.split('.')[0])
-    mlst_types = mlst_data.groupby('MLST')
-    mlsts = mlst_types.filter(lambda x: len(x) >= 5)
-    return mlsts
+    if groupby_flag:
+        mlst_types = mlst_data.groupby('MLST')
+        mlsts = mlst_types.filter(lambda x: len(x) >= 5)
+        return mlsts
+    return mlst_data
 
 strains = pd.read_csv(os.path.join(config.tables, "strains_list.csv"))
 strains['strain_normal'] = strains['strain'].apply(lambda r: r.split('.')[0])
