@@ -28,17 +28,8 @@ with open("assembly_summary.txt") as parent_dir:
 
 host = strains_list_full_path[0].split("/")
 os.chdir('data')
-flag = False
-index = 0
-while not flag:
-    for strain in strains_list_full_path:
-        strain = strain.split("/", 1)[1]
-        prefix = strain.split("/")[-1]
-        if prefix == "GCF_900144245.1_81":
-            index = strains_list_full_path.index(host[0] + "/" + strain)
-            flag = True
 
-for strain in strains_list_full_path[index:]:
+for strain in strains_list_full_path:
     strain = strain.split("/", 1)[1]
     prefix = strain.split("/")[-1]
     strains_list.append(prefix)
