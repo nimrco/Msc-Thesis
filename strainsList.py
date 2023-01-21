@@ -1,5 +1,3 @@
-
-
 strains_list = []
 with open("assembly_summary.txt") as parent_dir:
     for line in parent_dir:
