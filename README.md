@@ -1,3 +1,3 @@
 # Pseudomonas-aeruginosa-pseudogenes
 
-This repository contains the code used to conduct analysis on the Pseudomonas aeruginosa pseudogenes population. This work is part of thesis study for MSc degree.
+This repository contains the code used to analyze the Pseudomonas aeruginosa pseudogenes population. This work was developed for the article "A large-scale phylogeny-guided analysis of pseudogenes".
