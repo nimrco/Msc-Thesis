@@ -7,6 +7,8 @@ library(ape)
 library(dplyr)
 library(Polychrome)
 
+set.seed(1)
+
 trfile = system.file("extdata", "tree_file", package = "ggtreeExtra")
 color_var <- "MLST"
 
@@ -17,8 +19,8 @@ dat1 = read.csv(ratio_path)
 dat1 <- as_tibble(dat1) %>%
   mutate(MLST = ifelse(is.na(MLST), 1, MLST))
 # For Bioproject
-# dat1 <- as_tibble(dat1) %>%
-#   mutate(Bioproject = ifelse(Bioproject == "", "Empty", Bioproject))
+dat1 <- as_tibble(dat1) %>%
+  mutate(Bioproject = ifelse(Bioproject == "", "Empty", Bioproject))
 dat2 = dat1 %>% select(c("index", "MLST"))
 dat2 = aggregate(.~MLST, dat2, FUN=paste, collapse=",")
 clades = lapply(dat2$index, function(x){unlist(strsplit(x, split = ","))})

@@ -7,28 +7,27 @@ library(ape)
 library(dplyr)
 library(Polychrome)
 
+set.seed(1)
 
 trfile = system.file("extdata", "tree_file", package = "ggtreeExtra")
-color_var <- "MLST"
-path_to_mlst <- file.path("insert_path", "genes_pseudo_mlst.csv")
+color_var <- "Bioproject"  # MLST\Bioproject
+path_to_data <- file.path("genes_pseudo_bioproject.csv")
 
 tree <- read.tree(trfile)
-dat1 = read.csv(path_to_mlst)
+dat1 = read.csv(path_to_data)
 # For MLST
 dat1 <- as_tibble(dat1) %>%
   mutate(MLST = ifelse(is.na(MLST), 1, MLST))
 # # For Bioproject
-# dat1 <- as_tibble(dat1) %>%
-#   mutate(Bioproject = ifelse(Bioproject == "", "Empty", Bioproject))
+dat1 <- as_tibble(dat1) %>%
+  mutate(Bioproject = ifelse(Bioproject == "", "Empty", Bioproject))
 dat2 = dat1 %>% select(c("index", color_var))
-dat2 = aggregate(.~MLST, dat2, FUN=paste, collapse=",")
+dat2 = aggregate(.~Bioproject, dat2, FUN=paste, collapse=",")
 clades = lapply(dat2$index, function(x){unlist(strsplit(x, split = ","))})
-names(clades) = dat2$MLST
+names(clades) = dat2$Bioproject
 
 # Map colors palette to MLST\Bioproject
 num_colors <- ifelse(color_var == 'MLST', 135, 71)
-# pal <- createPalette(num_colors,  c("#ff0000", "#00ff00", "#0000ff"))
-# pal <- colorRampPalette(brewer.pal(11, "Paired"))(num_colors)
 pal <- colorRampPalette(palette36.colors(n = 36))(num_colors)
 if (color_var == 'MLST') {
   pal[2] <- "#000000"
@@ -37,9 +36,9 @@ if (color_var == 'MLST') {
 }
 pal <- unname(pal)
 
-tree = groupOTU(tree, clades, "MLST_color")
-MLST = NULL
-p <- ggtree(tree, layout="circular", branch.length='none', size=0.5, aes(color=MLST_color), show.legend=FALSE) + xlim(-10, NA)
+tree = groupOTU(tree, clades, "Bioproject_color")
+Bioproject = NULL
+p <- ggtree(tree, layout="circular", branch.length='none', size=0.5, aes(color=Bioproject_color), show.legend=FALSE) + xlim(-10, NA)
 p <- p +
   scale_color_manual(values = pal)
 
@@ -83,9 +82,9 @@ p = p + new_scale_colour() +
   )+
   scale_colour_manual(values=c('orange'), labels=c('Pseudogene'))
 
-tree_path <- file.path("insert_path", "tree_MLST_article.png")
+tree_path <- file.path("tree_Bioproject.png")
 p <- p + 
-  ggtitle("Tree with genes and pseudogenes count by MLST coloring") +
+  ggtitle("Tree with genes and pseudogenes count by Bioproject coloring") +
   theme(
     plot.title = element_text(hjust = 0.5, vjust = -10, size = 18)
   )
